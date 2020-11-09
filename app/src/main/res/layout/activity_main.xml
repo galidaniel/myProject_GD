@@ -10,12 +10,15 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="32dp"
+
         android:text="  HOME SCREEN"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#77AD37"
+        android:textColor="#AE29B4FF"
         android:textColorHighlight="#E4AEC1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,6 +28,8 @@
         android:layout_height="wrap_content"
         android:onClick="MTupload"
         android:text="UPLOAD RECIPE"
+        android:textColor="@android:color/white"
+        android:background="#AE29B4FF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/homeBtn"
@@ -34,9 +39,13 @@
         android:id="@+id/homeBtn"
         android:layout_width="137dp"
         android:layout_height="wrap_content"
+        android:background="#AE29B4FF"
         android:onClick="MThome"
         android:text="HOME"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/profileBtn"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="1.0" />
@@ -45,9 +54,29 @@
         android:id="@+id/profileBtn"
         android:layout_width="137dp"
         android:layout_height="wrap_content"
+        android:background="#AE29B4FF"
         android:onClick="MTprofile"
         android:text="MY COOKBOOK"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/uploadBtn" />
+        app:layout_constraintTop_toTopOf="@+id/uploadBtn"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/TextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_bright"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/homeBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.084" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,17 +13,21 @@
         android:layout_marginTop="80dp"
         android:text="recipe screen"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#E7A748"
+        android:textColor="#AE29B4FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/profileBtn"
+    <ImageButton
+        android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="#AE29B4Ff"
         android:onClick="MTprofile"
-        android:text="back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.014"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_media_rew" />
 </androidx.constraintlayout.widget.ConstraintLayout>
