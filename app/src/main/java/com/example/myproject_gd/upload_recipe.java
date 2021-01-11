@@ -51,7 +51,7 @@ ArrayList<String> Recipe;
 
 
     public void DiffSelector(View view) {
-        final String[] levels = {"Easy", "Moderate", "Hard"};
+        final String[] levels = {"Easy", "Moderate", "Hard"}; //dialog
         ListAdapter aryListAdapter =new ArrayAdapter(this, android.R.layout.simple_list_item_1, levels);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Difficulty:");
