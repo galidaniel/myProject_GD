@@ -20,6 +20,10 @@ EditText Title;
 EditText PrepTime;
 EditText Ingredients;
 EditText Steps;
+String TitleStr = "";
+String PrepTimeStr= "";
+String IngredientsStr="";
+String StepsStr="";
 ArrayList<String> Recipe;
 
     @Override
@@ -33,19 +37,31 @@ ArrayList<String> Recipe;
         Recipe = new ArrayList<String>();
     }
 
-    public void MTprofile(View view) {
-        Intent CookBookProf=new Intent(this,cookBook_profile.class);
-        startActivity(CookBookProf);
+    public void MThome(View view) {
+
+        Intent homePage = new Intent(this, homeScreen.class);
+
+            Toast.makeText(this, Title.getText().toString(), Toast.LENGTH_LONG).show();
+            TitleStr = Title.getText().toString();
+
+            Recipe.add(TitleStr);
+
+            PrepTimeStr = PrepTime.getText().toString();
+            Recipe.add(PrepTimeStr);
+            IngredientsStr = Ingredients.getText().toString();
+            Recipe.add(IngredientsStr);
+            StepsStr = Steps.getText().toString();
+            Recipe.add(StepsStr);
+            homePage.putStringArrayListExtra("arrInfo", Recipe);
+            startActivity(homePage);
+
     }
 
-    public void MThome(View view) {
-        Intent HomeScreen=new Intent(this,homeScreen.class);
-        Recipe.add(Title.getText().toString());
-        Recipe.add(PrepTime.getText().toString());
-        Recipe.add(Ingredients.getText().toString());
-        Recipe.add(Steps.getText().toString());
-        HomeScreen.putExtra("arrInfo" , Recipe);
-        startActivity(HomeScreen);
+
+    public void MTprofile(View view) {
+        Intent cookBookProfile =new Intent(this,homeScreen.class);
+        startActivity(cookBookProfile );
+
     }
 
 

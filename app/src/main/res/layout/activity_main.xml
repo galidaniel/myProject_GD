@@ -65,13 +65,11 @@
 
     <GridView
         android:id="@+id/gridview"
-        android:layout_width="411dp"
-        android:layout_height="620dp"
-        app:layout_constraintBottom_toTopOf="@+id/homeBtn"
+        android:layout_width="417dp"
+        android:layout_height="614dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
