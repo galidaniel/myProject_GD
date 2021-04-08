@@ -3,19 +3,28 @@ package com.example.myproject_gd;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.jar.Attributes;
 
 public class cookBook_profile extends AppCompatActivity {
-    ArrayList<String> arrInfo;
+    User arrInfo;
     ArrayList<String> posts;
     GridView gv;
+    TextView bio;
+    ImageView pfp;
 
 
 
@@ -24,40 +33,46 @@ public class cookBook_profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cook_book_profile);
         Intent PrevPage = getIntent();
+        bio = (TextView)findViewById(R.id.textView8);
         Toast.makeText(this,"MTprofile",Toast.LENGTH_SHORT).show();
-        /*arrInfo = PrevPage.getStringArrayListExtra("arrInfo");
+        arrInfo = (User)PrevPage.getSerializableExtra("arrInfo");
+        bio.setText("" + arrInfo.getUserName());
         posts = new ArrayList<String>();
+        int i =0;
         if(arrInfo != null) {
-            if (arrInfo.get(0).contains("Easy") || arrInfo.get(0).contains("Moderate") || arrInfo.get(0).contains("Hard")) {
                 try {
 
-                    posts.add(arrInfo.get(1));
+                    for(i =0; i < arrInfo.getMyRecipes().size(); i++)
+
+                    posts.add(arrInfo.getMyRecipes().get(i).getName());
 
                 } catch (Exception e) {
-                    Toast.makeText(this, "Hello " + arrInfo.get(0), Toast.LENGTH_SHORT).show();
-                }
+
             }
         }
         gv=(GridView)findViewById(R.id.gridview);
         ArrayAdapter<String> arrayAdpt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, posts);
         gv.setAdapter(arrayAdpt);
-        gv.setOnItemClickListener(gvListener);*/
+        gv.setOnItemClickListener(gvListener);
+
+
     }
-    /*private AdapterView.OnItemClickListener gvListener = new AdapterView.OnItemClickListener() {
+    private AdapterView.OnItemClickListener gvListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             posts.clear();
-            posts.add(arrInfo.get(0) + "\n\n" + arrInfo.get(1) + "\n\n" + arrInfo.get(2) + "\n\n" + arrInfo.get(3) + "\n\n" + arrInfo.get(4));
+
 
             Intent RecepieView = new Intent(cookBook_profile.this,recipe_view.class);
 
-            RecepieView.putExtra("RecInfo", posts);
+            RecepieView.putExtra("RecInfo", arrInfo.getMyRecipes().get(position));
 
             startActivity(RecepieView);
 
 
         }
-    };*/
+    };
+
 
     public void MTsettings(View view) {
         Intent i=new Intent(this,settings.class);
@@ -83,4 +98,6 @@ public class cookBook_profile extends AppCompatActivity {
         Intent i=new Intent(this,recipe_view.class);
         startActivity(i);
     }
+
+
 }

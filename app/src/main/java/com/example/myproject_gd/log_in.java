@@ -16,7 +16,7 @@ EditText userNameHolder;
 EditText passwordHolder;
 String userName;
 String Password;
-ArrayList<String> infoArr;
+User infoArr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,6 @@ ArrayList<String> infoArr;
     }
 
     public void MThome(View view) {
-        infoArr = new ArrayList<String>();
         userName = userNameHolder.getText().toString();
         Password = passwordHolder.getText().toString();
         if (userName.equals("") || Password.equals(""))
@@ -41,8 +40,8 @@ ArrayList<String> infoArr;
             Toast.makeText(this, "the fields must be filled", Toast.LENGTH_SHORT).show();
         }
         else {
-            infoArr.add(userName);
-            infoArr.add(Password);
+
+            infoArr = new User(userName,Password, "nan");
             Intent HomeScreen = new Intent(this, homeScreen.class);
             HomeScreen.putExtra("arrInfo", infoArr);
             startActivity(HomeScreen);

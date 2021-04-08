@@ -24,7 +24,8 @@ String TitleStr = "";
 String PrepTimeStr= "";
 String IngredientsStr="";
 String StepsStr="";
-ArrayList<String> Recipe;
+Recepie Recipe;
+User userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,33 +35,37 @@ ArrayList<String> Recipe;
         PrepTime  = (EditText)findViewById(R.id.PrepPlc);
         Ingredients  = (EditText)findViewById(R.id.ingriPlc);
         Steps  = (EditText)findViewById(R.id.StepsPlc);
-        Recipe = new ArrayList<String>();
+        userInfo = (User)getIntent().getSerializableExtra("arrInfo");
+        Recipe = new Recepie("non","non", "non","non","non");
     }
 
-    public void MThome(View view) {
+    public void MTprofile(View view) {
 
-        Intent homePage = new Intent(this, homeScreen.class);
+        Intent profscreen = new Intent(this, cookBook_profile.class);
 
             Toast.makeText(this, Title.getText().toString(), Toast.LENGTH_LONG).show();
             TitleStr = Title.getText().toString();
 
-            Recipe.add(TitleStr);
+
+
 
             PrepTimeStr = PrepTime.getText().toString();
-            Recipe.add(PrepTimeStr);
             IngredientsStr = Ingredients.getText().toString();
-            Recipe.add(IngredientsStr);
             StepsStr = Steps.getText().toString();
-            Recipe.add(StepsStr);
-            homePage.putStringArrayListExtra("arrInfo", Recipe);
-            startActivity(homePage);
+            Recipe.setIngridiants(IngredientsStr);
+            Recipe.setName(TitleStr);
+            Recipe.setSteps(StepsStr);
+            Recipe.setTime(PrepTimeStr);
+            userInfo.getMyRecipes().add(Recipe);
+            profscreen.putExtra("arrInfo", userInfo);
+            startActivity(profscreen);
 
     }
 
 
-    public void MTprofile(View view) {
-        Intent cookBookProfile =new Intent(this,homeScreen.class);
-        startActivity(cookBookProfile );
+    public void MThome(View view) {
+        Intent homeScreenView =new Intent(this,homeScreen.class);
+        startActivity(homeScreenView);
 
     }
 
@@ -74,11 +79,15 @@ ArrayList<String> Recipe;
         builder.setAdapter(aryListAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int level) {
-                Recipe.add(levels[level]);
+                Recipe.setLevel(levels[level]);
             }
         });
         AlertDialog dialog =builder.create();
         dialog.getListView().setBackgroundColor(Color.parseColor("#ecc6ec"));
         dialog.show();
+    }
+
+    public void MTprev(View view) {
+        finish();
     }
 }

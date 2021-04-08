@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class homeScreen extends AppCompatActivity {
-ArrayList<String> arrInfo = null;
+User arrInfo = null;
 ArrayList<String> posts;
 GridView gv;
 
@@ -24,8 +24,9 @@ GridView gv;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent PrevPage = getIntent();
-
-        arrInfo = PrevPage.getStringArrayListExtra("arrInfo");
+        arrInfo = (User) PrevPage.getSerializableExtra("arrInfo");
+    }
+        /*arrInfo = PrevPage.getStringArrayListExtra("arrInfo");
         posts = new ArrayList<String>();
         if(arrInfo != null) {
             if (arrInfo.get(0).contains("Easy") || arrInfo.get(0).contains("Moderate") || arrInfo.get(0).contains("Hard")) {
@@ -59,13 +60,13 @@ GridView gv;
 
 
         }
-    };
+    };*/
 
 
     public void MTprofile(View view) {
 
         Intent CookBookProf=new Intent(this,cookBook_profile.class);
-        CookBookProf.putStringArrayListExtra("arrInfo", arrInfo);
+        CookBookProf.putExtra("arrInfo", arrInfo);
 
         startActivity(CookBookProf);
     }

@@ -43,4 +43,8 @@ public class settings extends AppCompatActivity {
         HomeScreen.putExtra("arrInfo", infoArr);
         startActivity(HomeScreen);
     }
+
+    public void MTprev(View view) {
+        finish();
+    }
 }

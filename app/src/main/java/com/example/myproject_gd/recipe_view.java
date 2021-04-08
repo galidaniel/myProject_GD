@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class recipe_view extends AppCompatActivity {
-    ArrayList<String> arrInfo;
+    Recepie arrInfo;
     TextView tw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +18,16 @@ public class recipe_view extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_view);
         Intent PrevPage = getIntent();
         tw = (TextView)findViewById(R.id.textView9);
-        arrInfo = PrevPage.getStringArrayListExtra("RecInfo");
-        tw.setText(arrInfo.get(0));
+        arrInfo =(Recepie) PrevPage.getSerializableExtra("RecInfo");
+        tw.setText(arrInfo.toString());
     }
 
     public void MTprofile(View view) {
         Intent i=new Intent(this,cookBook_profile.class);
         startActivity(i);
+    }
+
+    public void MTprev(View view) {
+        finish();
     }
 }
