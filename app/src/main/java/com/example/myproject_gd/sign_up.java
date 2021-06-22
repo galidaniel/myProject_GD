@@ -1,5 +1,6 @@
 package com.example.myproject_gd;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -22,6 +23,7 @@ EditText LastNameHolder;
 EditText UserNameHolder;
 EditText PasswordHolder;
 User infoArr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,6 @@ User infoArr;
         LastNameHolder = (EditText)findViewById(R.id.editText5);
         UserNameHolder = (EditText)findViewById(R.id.editText6);
         PasswordHolder = (EditText)findViewById(R.id.editText4);
-        infoArr = new User("nan","nan","nan");
 
     }
     public void MTprofile(View view) {
@@ -41,10 +42,19 @@ User infoArr;
 
     public void MThome(View view) {
         Intent HomeScreen=new Intent(this,homeScreen.class);
-        infoArr.setPassword(PasswordHolder.getText().toString());
-        infoArr.setUserName(UserNameHolder.getText().toString());
-        HomeScreen.putExtra("arrInfo", infoArr);
-        startActivity(HomeScreen);
+        Dal dal = new Dal(sign_up.this);
+        if (dal.checkIfExist(UserNameHolder.getText().toString()))
+        {
+            Toast.makeText(this, "This user already exists!", Toast.LENGTH_SHORT).show();
+        }
+        else
+            {
+            dal.addUser(NameHolder.getText().toString(), LastNameHolder.getText().toString(), UserNameHolder.getText().toString(), PasswordHolder.getText().toString());
+                infoArr = new User(NameHolder.getText().toString(), LastNameHolder.getText().toString(), UserNameHolder.getText().toString(), PasswordHolder.getText().toString());
+                HomeScreen.putExtra("arrInfo", infoArr);
+                Log.w("myApp", infoArr.toString());
+            startActivity(HomeScreen);
+            }
     }
         }
 

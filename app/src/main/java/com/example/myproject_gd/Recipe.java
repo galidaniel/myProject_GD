@@ -2,19 +2,28 @@ package com.example.myproject_gd;
 
 import java.io.Serializable;
 
-public class Recepie implements Serializable {
+public class Recipe implements Serializable {
+    //allows to send objects off this class via intent ("get extra")
+    private String creator;
     private String level;
     private String name;
     private String steps;
     private String time;
-    private String ingridiants;
-    public Recepie(String level, String name, String Steps, String time, String ingridiants)
+    private String ingredients;
+    private String date;
+    public Recipe(String creator, String level, String name, String Steps, String time, String ingridiants, String date)
     {
+        this.creator = creator;
         this.level = level;
         this.name = name;
         this.steps = Steps;
         this.time = time;
-        this.ingridiants = ingridiants;
+        this.ingredients = ingridiants;
+        this.date = date;
+    }
+
+    public String getCreator() {
+        return creator;
     }
 
     public String getLevel() {
@@ -33,12 +42,24 @@ public class Recepie implements Serializable {
         return time;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
     public void setLevel(String level) {
         this.level = level;
     }
 
-    public void setIngridiants(String ingridiants) {
-        this.ingridiants = ingridiants;
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
     }
 
     public void setName(String name) {
@@ -53,14 +74,19 @@ public class Recepie implements Serializable {
         this.time = time;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "" +
                 "name: " + name + '\n' +
                 "level: " + level + '\n' +
-                "ingridients: " + ingridiants + '\n'+
+                "ingredients: " + ingredients + '\n'+
                 "steps: " + steps + '\n' +
-                "time: " + time + '\n'
+                "time: " + time + '\n' +
+                "date: " + date
                   ;
     }
 }

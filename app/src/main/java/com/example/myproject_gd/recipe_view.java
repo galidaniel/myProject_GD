@@ -7,19 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class recipe_view extends AppCompatActivity {
-    Recepie arrInfo;
-    TextView tw;
+    Recipe arrInfo;
+    TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_view);
         Intent PrevPage = getIntent();
-        tw = (TextView)findViewById(R.id.textView9);
-        arrInfo =(Recepie) PrevPage.getSerializableExtra("RecInfo");
-        tw.setText(arrInfo.toString());
+        tv = (TextView)findViewById(R.id.textView9);
+        arrInfo =(Recipe) PrevPage.getSerializableExtra("RecInfo");
+        tv.setText(arrInfo.toString());
     }
 
     public void MTprofile(View view) {

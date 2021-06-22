@@ -76,8 +76,8 @@
         android:id="@+id/textView8"
         android:layout_width="112dp"
         android:layout_height="119dp"
-        android:text="Bio:"
-        android:textColor="#7182EB"
+        android:text=""
+        android:textColor="#9BA5E8"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.458"
@@ -98,7 +98,7 @@
         app:srcCompat="@android:drawable/ic_menu_manage" />
 
     <GridView
-        android:id="@+id/gridview"
+        android:id="@+id/userposts"
         android:layout_width="410dp"
         android:layout_height="468dp"
         android:layout_marginTop="4dp"

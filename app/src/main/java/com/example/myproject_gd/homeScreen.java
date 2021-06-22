@@ -4,63 +4,81 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class homeScreen extends AppCompatActivity {
 User arrInfo = null;
-ArrayList<String> posts;
+ArrayList<Recipe> posts = new ArrayList<Recipe>();
+ArrayList<String> recipesName = new ArrayList<String>();
 GridView gv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.w("myApp", "hello");
         Intent PrevPage = getIntent();
-        arrInfo = (User) PrevPage.getSerializableExtra("arrInfo");
-    }
-        /*arrInfo = PrevPage.getStringArrayListExtra("arrInfo");
-        posts = new ArrayList<String>();
-        if(arrInfo != null) {
-            if (arrInfo.get(0).contains("Easy") || arrInfo.get(0).contains("Moderate") || arrInfo.get(0).contains("Hard")) {
-                try {
-
-                    posts.add(arrInfo.get(1));
-
-                } catch (Exception e) {
-                    Toast.makeText(this, "Hello " + arrInfo.get(0), Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-        gv=(GridView)findViewById(R.id.gridview);
-        ArrayAdapter<String> arrayAdpt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, posts);
+        arrInfo = (User)PrevPage.getSerializableExtra("arrInfo");
+        Log.w("myApp", "home got: " +arrInfo.toString());
+        Dal dal = new Dal(homeScreen.this);
+        posts = dal.getAllRecipes();
+        Log.w("myApp", "home got: " +arrInfo.getUserName());
+        sortPosts(posts);
+        Log.w("myApp", "2: " + posts.size());
+        getNames(recipesName, posts);
+        gv=(GridView)findViewById(R.id.postsview);
+        ArrayAdapter<String> arrayAdpt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, recipesName);
         gv.setAdapter(arrayAdpt);
         gv.setOnItemClickListener(gvListener);
 
-
     }
+
+    private void getNames(ArrayList<String> recipesName, ArrayList<Recipe> posts) {
+        int i =0;
+        for(i =0; i < posts.size(); i++)
+        {
+            recipesName.add(posts.get(i).getName());
+        }
+    }
+
+    public void sortPosts(ArrayList<Recipe> posts)
+    {
+        int i =0;
+        int j =0;
+        Recipe temp;
+        for(i =0; i < (posts.size()) ; i++)
+        {
+            for(j = i + 1 ; j < (posts.size()) ; j++) {
+                if (posts.get(i).getDate().compareTo(posts.get(j).getDate()) < 0) {
+                    Collections.swap(posts, i, j);
+
+                }
+                Log.w("myApp", " " + (i < (posts.size() - 1)));
+            }
+        }
+    }
+
     private AdapterView.OnItemClickListener gvListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            posts.clear();
-            posts.add(arrInfo.get(0) + "\n\n" + arrInfo.get(1) + "\n\n" + arrInfo.get(2) + "\n\n" + arrInfo.get(3) + "\n\n" + arrInfo.get(4));
 
             Intent RecepieView = new Intent(homeScreen.this,recipe_view.class);
 
-            RecepieView.putExtra("RecInfo", posts);
+            RecepieView.putExtra("RecInfo", posts.get(position));
 
             startActivity(RecepieView);
 
 
         }
-    };*/
+    };
 
 
     public void MTprofile(View view) {

@@ -1,19 +1,25 @@
 package com.example.myproject_gd;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class upload_recipe extends AppCompatActivity {
 EditText Title;
@@ -24,7 +30,7 @@ String TitleStr = "";
 String PrepTimeStr= "";
 String IngredientsStr="";
 String StepsStr="";
-Recepie Recipe;
+Recipe recipe;
 User userInfo;
 
     @Override
@@ -36,30 +42,31 @@ User userInfo;
         Ingredients  = (EditText)findViewById(R.id.ingriPlc);
         Steps  = (EditText)findViewById(R.id.StepsPlc);
         userInfo = (User)getIntent().getSerializableExtra("arrInfo");
-        Recipe = new Recepie("non","non", "non","non","non");
+        recipe = new Recipe("non","non", "non","non","non", "", "");//default values
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void MTprofile(View view) {
-
         Intent profscreen = new Intent(this, cookBook_profile.class);
 
-            Toast.makeText(this, Title.getText().toString(), Toast.LENGTH_LONG).show();
             TitleStr = Title.getText().toString();
-
-
-
-
             PrepTimeStr = PrepTime.getText().toString();
             IngredientsStr = Ingredients.getText().toString();
             StepsStr = Steps.getText().toString();
-            Recipe.setIngridiants(IngredientsStr);
-            Recipe.setName(TitleStr);
-            Recipe.setSteps(StepsStr);
-            Recipe.setTime(PrepTimeStr);
-            userInfo.getMyRecipes().add(Recipe);
+            Dal dal = new Dal(upload_recipe.this);
+            String date = getCurrentTimeStamp();
+            Log.w("myApp", userInfo.getUserName() + " "+TitleStr);
+            dal.addRecipe(userInfo.getUserName(), recipe.getLevel(), PrepTimeStr, IngredientsStr, StepsStr , date, TitleStr);//add to data base
             profscreen.putExtra("arrInfo", userInfo);
             startActivity(profscreen);
 
+    }
+
+    public static String getCurrentTimeStamp() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        return strDate;
     }
 
 
@@ -73,13 +80,13 @@ User userInfo;
 
     public void DiffSelector(View view) {
         final String[] levels = {"Easy", "Moderate", "Hard"}; //dialog
-        ListAdapter aryListAdapter =new ArrayAdapter(this, android.R.layout.simple_list_item_1, levels);
+        ListAdapter aryListAdapter =new ArrayAdapter(this, android.R.layout.simple_list_item_1, levels);//mekasher
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Difficulty:");
         builder.setAdapter(aryListAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int level) {
-                Recipe.setLevel(levels[level]);
+                recipe.setLevel(levels[level]);
             }
         });
         AlertDialog dialog =builder.create();
