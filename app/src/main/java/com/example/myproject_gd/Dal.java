@@ -16,18 +16,18 @@ public class Dal extends SQLiteAssetHelper {
     }
     //user related queries:
     public void updateUser(String oldUser ,String name, String last_name, String username, String password)
-    {
+    {//settings changes
         SQLiteDatabase db = getWritableDatabase();
-        Log.w("myApp", "update: " + oldUser + " to: " + username);
+        //Log.w("myApp", "update: " + oldUser + " to: " + username);
         String user_UPDATE = "UPDATE cookbook_users SET name = '" + name + "', last_name = '" + last_name + "', username = '" + username + "', password = '" + password + "' WHERE _id=" + getUserId(oldUser);
         SQLiteStatement statement = db.compileStatement(user_UPDATE);
-        updateUserRecipes(oldUser, username);
+        updateUserRecipes(oldUser, username);//updating old usernames
 
         statement.execute();
 
     }
     public int getUserId(String username)
-    {
+    {//returns users id from cookbook_users table
         int id = -1;
         ArrayList<Recipe> ary = new ArrayList<Recipe>();
         String get_recipes = "select * from cookbook_users WHERE username='" + username + "'";
@@ -67,7 +67,7 @@ public class Dal extends SQLiteAssetHelper {
         return ary;
     }
     public Boolean checkIfExist(String username)
-    {
+    {//prevents identical username
             String get_users = "select * from cookbook_users";
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(get_users, null);
@@ -106,7 +106,7 @@ public class Dal extends SQLiteAssetHelper {
             String recipe_INSERT = "INSERT INTO recipes (difficulty ,prep_time ,ingridiants ,steps ,date ,name) values (" + "'" + difficulty + "'" + " ,'" + prep_time + "'" + " ,'" + ingridiants + "'" + " ,'" + steps + "'" + " ,'" + date + "'" + " ,'" + name + "')";
             SQLiteStatement statement = db.compileStatement(recipe_INSERT);
             statement.execute();
-            id = getLatestId();
+            id = getLatestId();//calling function
             String connectorTable_INSERT = "INSERT INTO users_recipes (username, recipe_id) values ('" + creator + "' ," + id + ")";
             SQLiteStatement statement2 = db.compileStatement(connectorTable_INSERT);
             statement2.execute();
@@ -114,11 +114,12 @@ public class Dal extends SQLiteAssetHelper {
         }
         public int getLatestId()
         {
+            //gets the id of the latest recipe
             int id = -1;
             ArrayList<Recipe> ary = new ArrayList<Recipe>();
             String get_recipes = "select * from recipes";
             SQLiteDatabase db = getWritableDatabase();
-            Cursor cursor = db.rawQuery(get_recipes, null);
+            Cursor cursor = db.rawQuery(get_recipes, null);//"pointer"
             while (cursor.moveToNext()) {
                 id = cursor.getInt(cursor.getColumnIndex("id"));
 
@@ -144,9 +145,10 @@ public class Dal extends SQLiteAssetHelper {
         }
         public ArrayList<Recipe> getAllRecipeByUser(String username)
         {
+            //returns all this specific user's recipes
         int i =0;
         ArrayList<Recipe> ary = new ArrayList<Recipe>();
-        ArrayList<Integer> ids = new ArrayList<Integer>();
+        ArrayList<Integer> ids = new ArrayList<Integer>();//gets all user ids
         String get_recipes;
         String get_recipes_ids = "select * from users_recipes WHERE username='" + username + "'";
         SQLiteDatabase db = getWritableDatabase();
@@ -154,12 +156,12 @@ public class Dal extends SQLiteAssetHelper {
         while (cursor.moveToNext()) {
             ids.add(cursor.getInt(cursor.getColumnIndex("recipe_id")));
         }
-        for(i =0 ; i < ids.size(); i++)
+        for(i =0 ; i < ids.size(); i++)//adds recipes to ary
         {
             get_recipes =  "select * from recipes WHERE id=" + ids.get(i)+ "";
             db = getWritableDatabase();
             Cursor cursor2 = db.rawQuery(get_recipes, null);
-            cursor2.moveToNext();
+            cursor2.moveToNext();//moves to 1st row
 
             Recipe temp = new Recipe("", "", "", "", "", "", "");
             temp.setLevel(cursor2.getString(cursor2.getColumnIndex("difficulty")));
@@ -178,6 +180,7 @@ public class Dal extends SQLiteAssetHelper {
     }
     public void updateUserRecipes(String oldUsername, String newUsername)
     {
+        //updates new username after user changes settings
         SQLiteDatabase db = getWritableDatabase();
         String user_UPDATE = "UPDATE users_recipes SET username = '" + newUsername + "' WHERE username='" + oldUsername + "'";
         SQLiteStatement statement = db.compileStatement(user_UPDATE);
